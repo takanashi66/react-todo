@@ -18,6 +18,25 @@ class App extends React.Component{
         {title: 'React覚える'},
       ]
     }
+    
+    //thisを束縛
+    this.addTodo = this.addTodo.bind(this);
+  }
+  
+  //追加ボタンが押された時の処理
+  addTodo(){
+    //inputのrefs属性がnewTextに入力された値をthis.state.todoに追加する
+    this.state.todo.push({
+      title: this.refs.newText.value
+    })
+    
+    //setStateで保存
+    this.setState({
+      todo : this.state.todo
+    })
+    
+    //入力欄を空にする
+    this.refs.newText.value = ''
   }
   
   //render
@@ -31,14 +50,17 @@ class App extends React.Component{
           }
           {this.state.todo.map((todo, i) => {
             {
-            //keyはunique
+            //keyはunique}
             //this.state.todo.titleを表示
             }
-            return <li className="todo_item" key={i}><input type="button" value="☓"/>{todo.title}</li>
+            return <li className="todo_item" key={i}><input type="button" value="☓" />{todo.title}</li>
           })}
         </ul>
-        <input type="text"/>
-        <input type="button" value="追加"/>
+        <input type="text" ref="newText" />
+        {
+          //追加ボタンが押されたらaddTodoを発火
+        }
+        <input type="button" value="追加" onClick={this.addTodo} />
       </div>
     )
   }
