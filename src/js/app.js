@@ -24,19 +24,31 @@ class App extends React.Component{
   }
   
   //追加ボタンが押された時の処理
+  //ToDoを追加
   addTodo(){
     //inputのrefs属性がnewTextに入力された値をthis.state.todoに追加する
     this.state.todo.push({
       title: this.refs.newText.value
     })
     
-    //setStateで保存
+    //setStateでstateに変更を通知
     this.setState({
       todo : this.state.todo
     })
     
     //入力欄を空にする
     this.refs.newText.value = ''
+  }
+  
+  
+  deleteTodo(i) {
+    //i番の配列を削除
+    this.state.todo.splice(i, 1);
+    
+    //setStateでstateに変更を通知
+    this.setState({
+      todo : this.state.todo
+    });
   }
   
   //render
@@ -53,7 +65,7 @@ class App extends React.Component{
             //keyはunique}
             //this.state.todo.titleを表示
             }
-            return <li className="todo_item" key={i}><input type="button" value="☓" />{todo.title}</li>
+            return <li className="todo_item" key={i}><input type="button" value="☓" onClick={() => this.deleteTodo(i)}/>{todo.title}</li>
           })}
         </ul>
         <input type="text" ref="newText" />
