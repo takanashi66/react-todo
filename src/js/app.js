@@ -16,7 +16,8 @@ class App extends React.Component{
         {title: 'jQuery覚える'},
         {title: 'ES2015覚える'},
         {title: 'React覚える'},
-      ]
+      ],
+      error: "",
     }
     
     //thisを束縛
@@ -26,18 +27,31 @@ class App extends React.Component{
   //追加ボタンが押された時の処理
   //ToDoを追加
   addTodo(){
-    //inputのrefs属性がnewTextに入力された値をthis.state.todoに追加する
-    this.state.todo.push({
-      title: this.refs.newText.value
-    })
-    
-    //setStateでstateに変更を通知
-    this.setState({
-      todo : this.state.todo
-    })
-    
-    //入力欄を空にする
-    this.refs.newText.value = ''
+    //入力された内容が空でなければToDoを追加
+    if(this.refs.newText.value != ""){
+      
+      //inputのrefs属性がnewTextに入力された値をthis.state.todoに追加する
+      this.state.todo.push({
+        title: this.refs.newText.value
+      })
+      
+      //setStateでstateに変更を通知
+      this.setState({
+        todo : this.state.todo,
+        //エラーメッセージの削除
+        error : ""
+      })
+      
+      //入力欄を空にする
+      this.refs.newText.value = ''
+      
+    }else{
+      //空の場合はエラーメッセージを表示
+      this.setState({
+        error : "入力されていません"
+      })
+      
+    }
   }
   
   
@@ -73,6 +87,8 @@ class App extends React.Component{
           //追加ボタンが押されたらaddTodoを発火
         }
         <input type="button" value="追加" onClick={this.addTodo} />
+        
+        <p>{this.state.error}</p>
       </div>
     )
   }
